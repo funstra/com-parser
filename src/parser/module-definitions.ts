@@ -1,6 +1,7 @@
+import { moduleTypes, COMmodule } from "../types/com-parser"
 // TODO write set function for parameters
 
-export const module_map: Map<module_types, COMmodule> = new Map()
+export const module_map: Map<moduleTypes, COMmodule> = new Map()
 
 module_map.set('lfo', {
     type: 'lfo',

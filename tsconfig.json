@@ -1,16 +1,7 @@
 {
     "compilerOptions": {
-        "module": "ESNext",
-        "moduleResolution": "Node",
-        "target": "ES2020",
-        "checkJs": true,
-        "allowJs": true,
-        "strictNullChecks": true,
-        "strictFunctionTypes": true,
-        "sourceMap": true,
+        "lib": [
+            "ESNext"
+        ],
     },
-    "exclude": [
-        "node_modules",
-        "**/node_modules/*"
-    ]
 }

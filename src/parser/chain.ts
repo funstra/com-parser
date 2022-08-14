@@ -1,5 +1,7 @@
 import module from "./module"
+import { COMchain, COMmodule } from "../types/com-parser"
 import { splitComma, slice2, splitColonInt, isNAN } from "../util"
+
 
 /**
  * Parses an chain string and returns an {@link COMchain}
@@ -11,6 +13,7 @@ export default (s: string): COMchain | false => {
     const [cv, gt] = splitComma(inputString).map(slice2).map(splitColonInt)
     // only allow strictly formated input
     if ((cv.some(isNAN) || gt.some(isNAN))) return false
+    const modules = modulesString.split(',').map(module) as COMmodule[]
 
     return {
         input: {
@@ -23,7 +26,6 @@ export default (s: string): COMchain | false => {
                 ch: gt[1]
             }
         },
-        modules: modulesString ? modulesString.split(',').map(module) : []
+        modules
     }
-
 }

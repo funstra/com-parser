@@ -1,4 +1,5 @@
 import { int, splitColon, slice, isNAN } from "../util"
+import { COMout } from '../types/com-parser'
 const slice3 = slice(3)
 
 /**
