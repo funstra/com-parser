@@ -1,14 +1,13 @@
 {
-  "version": "0.0.6",
-  "files": ["dist"],
+  "version": "0.0.7",
   "name": "@mkj.aldrin/com-parser",
   "source": "src/index.ts",
-  "main": "dist/main.js",
+  "main": "dist/main.cjs",
   "module": "dist/module.js",
   "types": "dist/types.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/main.js",
+      "require": "./dist/main.cjs",
       "import": "./dist/module.js",
       "types": "./dist/types.d.ts"
     }
