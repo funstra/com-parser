@@ -1,13 +1,16 @@
 {
+  "version": "0.0.5",
   "name": "@mkj.aldrin/com-parser",
-  "version": "0.0.4",
   "source": "src/index.ts",
-  "types": "dist/types.d.ts",
   "main": "dist/main.js",
   "module": "dist/module.js",
+  "types": "dist/types.d.ts",
   "exports": {
-    "import": "./dist/module.js",
-    "require": "./dist/main.js"
+    ".": {
+      "require": "./dist/main.js",
+      "import": "./dist/module.js",
+      "types": "./dist/types.d.ts"
+    }
   },
   "scripts": {
     "build": "parcel build",
