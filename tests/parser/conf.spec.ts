@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
-import conf from "../../src/parser/conf";
+// import conf from "../../src/parser/conf";
 
 
-describe('', () => {
+describe.todo('', () => {
     it('empty string => false', () => {
         const conf_object = conf('')
         expect(conf_object).toBe(false)

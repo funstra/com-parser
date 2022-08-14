@@ -13,7 +13,7 @@ export default (s: string): COMchain | false => {
     const [cv, gt] = splitComma(inputString).map(slice2).map(splitColonInt)
     // only allow strictly formated input
     if ((cv.some(isNAN) || gt.some(isNAN))) return false
-    const modules = modulesString.split(',').map(module) as COMmodule[]
+    const modules = modulesString ? modulesString.split(',').map(module).filter(m => m ? true : false) as COMmodule[] : []
 
     return {
         input: {
