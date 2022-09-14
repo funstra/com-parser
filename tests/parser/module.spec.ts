@@ -1,36 +1,63 @@
-import { describe, it, expect } from "vitest";
-import module from '../../src/parser/module'
+import { describe, expect, it } from "vitest";
+import { parseModuleString } from "../../src/parser/module";
+import { COMmoduleStruct } from "../../src/struct/module";
 
 
-describe('parsing a module', () => {
-    it('empty string => false', () => {
-        const module_object: COMmodule | false = module('')
-        expect(module_object).toBeFalsy()
+describe('COM-MODULE', () => {
+    describe('valid', () => {
+
+        const valid_module_string0 = 'lfo300:5'
+        const valid_module_string1 = 'prob75'
+        const valid_module_string2 = 'pth'
+        const res0 = parseModuleString(valid_module_string0)
+        const res1 = parseModuleString(valid_module_string1)
+        const res2 = parseModuleString(valid_module_string2)
+        it('', () => {
+            expect(res0).toHaveProperty('name')
+            expect(res0).toHaveProperty('params')
+            expect(res1).toHaveProperty('name')
+            expect(res1).toHaveProperty('params')
+        })
+        it('', () => {
+            expect(res0.name).toBeTypeOf('string')
+            expect(res1.name).toBeTypeOf('string')
+        })
+        it('', () => {
+            expect(res0).
+                toMatchObject<COMmoduleStruct>({
+                    name: 'lfo',
+                    params: [
+                        {
+                            name: 'frequency',
+                            value: 300
+                        },
+                        {
+                            name: 'amplitude',
+                            value: 5
+                        }
+                    ]
+                })
+            expect(res1).
+                toMatchObject<COMmoduleStruct>({
+                    name: 'prob',
+                    params: [
+                        {
+                            name: 'chance',
+                            value: 75
+                        }
+                    ]
+                })
+            expect(res2).
+                toMatchObject<COMmoduleStruct>({
+                    name: 'pth',
+                    params: []
+                })
+        })
     })
-    it('type without parameters => COMmodule, empty parameters', () => {
-        const module_object: COMmodule | false = module('pth')
-        const match_object: COMmodule = {
-            type: 'pth',
-            parameters: []
-        }
-        expect(module_object).toMatchObject(match_object)
-    })
-    it('type and parameters => COMmodule, with parameter', () => {
-
-        const module_object: COMmodule | false = module('lfo100:5')
-        const match_object: COMmodule = {
-            type: 'lfo',
-            parameters: [
-                {
-                    name: 'frequency',
-                    value: 100
-                },
-                {
-                    name: 'amplitude',
-                    value: 5
-                }
-            ]
-        }
-        expect(module_object).toMatchObject(match_object)
+    describe.todo('invalid', () => {
+        const invalid_module_string0 = 'lfo300:5'
+        const invalid_module_string1 = 'prob8'
+        const res0 = parseModuleString(invalid_module_string0)
+        const res1 = parseModuleString(invalid_module_string1)
     })
 })

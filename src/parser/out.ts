@@ -1,16 +1,21 @@
-import { int, splitColon, slice, isNAN } from "../util"
-import { COMout } from '../types/com-parser'
-const slice3 = slice(3)
+import { COMperiphial } from "./conf"
 
-/**
- * Parses an outstring and returns an {@link COMout}
- * @param s out string
- */
-export default (s: string): COMout | false => {
-    if (!s || !s.startsWith('out')) return false
-    const parts = splitColon(slice3(s)).map(int)
-    if (parts.some(isNAN)) return false
-    const [pid, ch, src_cv_c, src_cv_m, src_gt_c, src_gt_m] = parts
+export interface COMoutStruct {
+    destination: COMperiphial
+    source: {
+        cv: {
+            chain: number
+            module: number
+        }
+        gt: {
+            chain: number
+            module: number
+        }
+    }
+}
+
+export const parseOutString = (s: string): COMoutStruct => {
+    const [pid, ch, ...src] = s.slice(3).split(':').map(v => parseInt(v))
     return {
         destination: {
             pid,
@@ -18,12 +23,12 @@ export default (s: string): COMout | false => {
         },
         source: {
             cv: {
-                chain: src_cv_c,
-                module: src_cv_m
+                chain: src[0],
+                module: src[1]
             },
             gt: {
-                chain: src_gt_c,
-                module: src_gt_m
+                chain: src[2],
+                module: src[3]
             }
         }
     }

@@ -1,21 +1,21 @@
-import module from "./module"
-import { COMchain, COMmodule } from "../types/com-parser"
-import { splitComma, slice2, splitColonInt, isNAN } from "../util"
+import { COMmoduleStruct, parseModuleString } from "./module"
+import { COMperiphial } from "./conf"
 
-
-/**
- * Parses an chain string and returns an {@link COMchain}
- * @param s chain string
- */
-export default (s: string): COMchain | false => {
-    if (!s) return false
-    const [inputString, modulesString] = s.split('>')
-    const [cv, gt] = splitComma(inputString).map(slice2).map(splitColonInt)
-    // only allow strictly formated input
-    if ((cv.some(isNAN) || gt.some(isNAN))) return false
-    const modules = modulesString ? modulesString.split(',').map(module).filter(m => m ? true : false) as COMmodule[] : []
+export interface COMchainStruct {
+    index: number
+    input: {
+        cv: COMperiphial
+        gt: COMperiphial
+    }
+    modules: COMmoduleStruct[]
+}
+export const parseChainString = (s: string, index: number = 0): COMchainStruct => {
+    const [input, modules] = s.split('>')
+    const input_strings = input.split(',')
+    const [cv, gt] = input_strings.map(s => s.slice(2).split(':').map(d => parseInt(d)))
 
     return {
+        index,
         input: {
             cv: {
                 pid: cv[0],
@@ -26,6 +26,6 @@ export default (s: string): COMchain | false => {
                 ch: gt[1]
             }
         },
-        modules
+        modules: modules ? modules.split(',').map(parseModuleString) : [],
     }
 }
